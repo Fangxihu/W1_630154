@@ -2551,6 +2551,8 @@ static bool appHfpVolumeRepeat(int16 step)
     
     if (appHfpIsConnected())
     {
+    
+		appUiAvVolumeUp();
         /* Handle volume change locally */
         if (appHfpVolumeChange(step))
         {
@@ -2581,14 +2583,14 @@ static bool appHfpVolumeRepeat(int16 step)
 void appHfpVolumeStart(int16 step)
 {
     DEBUG_LOGF("appHfpVolumeStart(%d)", step);
-
     if (appHfpVolumeRepeat(step))
     {
         appGetHfp()->volume_repeat = 0;
+		/*
         if (step > 0)
             appUiHfpVolumeUp();
         else
-            appUiHfpVolumeDown();
+            appUiHfpVolumeDown();*/
     }
 }
 

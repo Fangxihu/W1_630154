@@ -647,16 +647,16 @@ const ringtone_note app_tone_pairing_deleted[] =
 
 const ringtone_note app_tone_volume[] =
 {
-    RINGTONE_TIMBRE(sine), RINGTONE_DECAY(16),
-    RINGTONE_NOTE(D7, SEMIQUAVER),
+    RINGTONE_TIMBRE(sine), RINGTONE_DECAY(8),
+    RINGTONE_NOTE(B6, SEMIQUAVER),
     RINGTONE_STOP
 };
 
 const ringtone_note app_tone_volume_limit[] =
 {
     RINGTONE_TIMBRE(sine), RINGTONE_DECAY(16),
-    RINGTONE_NOTE(D7, SEMIQUAVER),
-    RINGTONE_NOTE(D7, SEMIQUAVER),
+    RINGTONE_NOTE(F7, SEMIQUAVER),
+    RINGTONE_NOTE(F7, SEMIQUAVER),
     RINGTONE_STOP
 };
 
@@ -886,6 +886,23 @@ void appUiSleep(void)
     appLedEnable(FALSE);
 }
 
+#ifdef INCLUDE_FTSINGLEPEER
+bool appUiFTSingleGet(void)
+{
+    uiTaskData *theUi = appGetUi();
+
+    return theUi->ftsingle_flag;
+}
+
+void appUiFTSingleClear(void)
+{
+    uiTaskData *theUi = appGetUi();
+
+    theUi->ftsingle_flag = FALSE;
+}
+
+#endif
+
 /**/
 #ifdef MULTI_TAP
 static void appTapFunction(void)
@@ -893,7 +910,7 @@ static void appTapFunction(void)
     uiTaskData *theUi = appGetUi();
     theUi->tap_count = theUi->tap_count + 1;
     MessageCancelAll(&theUi->task, UI_INTERNAL_MULTI_TAP);
-    MessageSendLater(&theUi->task, UI_INTERNAL_MULTI_TAP, NULL, 700);
+    MessageSendLater(&theUi->task, UI_INTERNAL_MULTI_TAP, NULL, 500);
     DEBUG_LOGF("tap_count = %d", theUi->tap_count);
 }
 
@@ -1013,6 +1030,19 @@ static void appUiMultiTapHandle(void)
 #endif /* INCLUDE_DFU */
 		}
 		break;
+		case 7:
+		{
+			DEBUG_LOG("key 7!!!_ft");
+#ifdef INCLUDE_FTSINGLEPEER
+			if ((PHY_STATE_IN_CASE != appPhyStateGetState()) && (!(theUi->ftsingle_flag)))
+			{
+				DEBUG_LOG("DUT_modle!!!");
+				theUi->ftsingle_flag = TRUE;
+				Dut_User_Exit_Peer_Pairing();
+			}
+#endif
+		}
+		break;
 		case 9:
 		{
 			DEBUG_LOG("key nine!!!_power off");
@@ -1028,13 +1058,13 @@ static void appUiMultiTapHandle(void)
 		{
 			DEBUG_LOG("key 15!!!_DUT");
 #ifdef INCLUDE_DUT
-	            if ((PHY_STATE_IN_CASE != appPhyStateGetState()) && (!(theUi->dut_flag)))
-	            {
+            if ((PHY_STATE_IN_CASE != appPhyStateGetState()) && (!(theUi->dut_flag)))
+            {
 				DEBUG_LOG("DUT_modle!!!");
 				appUiDut();
 				Dut_User_Exit_Peer_Pairing();
 				MessageSendLater(&theUi->task, UI_INTERNAL_DUT, NULL, 1000);
-	            }
+            }
 #endif
 		}
 		break;
@@ -1233,5 +1263,7 @@ void appUiInit(void)
 #ifdef INCLUDE_DUT
     theUi->dut_flag = FALSE;
 #endif
-
+#ifdef INCLUDE_FTSINGLEPEER
+		theUi->ftsingle_flag = FALSE;
+#endif
 }

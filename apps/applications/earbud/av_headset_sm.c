@@ -540,6 +540,13 @@ static void appEnterInCase(void)
 #endif
 #endif
 
+#ifdef INCLUDE_FTSINGLEPEER
+	if(appUiFTSingleGet())
+	{
+		appUiFTSingleClear();
+		appSmDeletePairingAndReset();
+	}
+#endif
 }
 
 /*! \brief Enter APP_STATE_OUT_OF_CASE parent function actions. */

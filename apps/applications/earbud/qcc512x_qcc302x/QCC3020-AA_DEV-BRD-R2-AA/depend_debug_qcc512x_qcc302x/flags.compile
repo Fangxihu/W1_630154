@@ -55,6 +55,7 @@
 -DUSER_PEER_SYNC_STATE
 -DUSER_KEY_CONNECT_HANDSET
 -DENABLE_SPPno
+-DINCLUDE_FTSINGLEPEERx
 -preinclude
 hydra_types.h
 -preinclude

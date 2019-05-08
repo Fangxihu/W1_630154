@@ -74,6 +74,9 @@ typedef struct
 #ifdef INCLUDE_DUT
     bool dut_flag:1;                /*!< User initiated pairing */
 #endif
+#ifdef INCLUDE_FTSINGLEPEER
+	bool ftsingle_flag:1;				/*!< for facotry test single peer*/
+#endif
 } uiTaskData;
 
 /*! Audio prompt configuration */
@@ -335,7 +338,7 @@ extern const ringtone_note app_tone_av_link_loss[];
 
 /*! \brief Play AV volume up tone */
 #define appUiAvVolumeUp() \
-   appUiPlayToneInterruptible(app_tone_volume)
+   appUiPlayTone(app_tone_volume)
 
 /*! \brief Play AV volume limit reached tone */
 #define appUiAvVolumeLimit() \
@@ -563,6 +566,10 @@ extern void appUiAvError(bool silent);
 extern void appUiPowerOn(void);
 extern void appUiPowerOff(uint16 *lock, uint16 lock_mask);
 extern void appUiSleep(void);
+#ifdef INCLUDE_FTSINGLEPEER
+extern bool appUiFTSingleGet(void);
+extern void appUiFTSingleClear(void);
+#endif
 /*! \brief Play a tone to completion */
 #define appUiPlayTone(tone) appUiPlayToneCore(tone, FALSE, NULL, 0)
 /*! \brief Play a tone allowing another tone/prompt/event to interrupt (stop) this tone

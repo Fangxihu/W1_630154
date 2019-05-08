@@ -17,7 +17,7 @@
 #define DISABLE_AACx
 #endif
 #define DISABLE_AAC
-#define SW_DEBUG
+#define SW_DEBUGx
 
 #ifdef SW_DEBUG
 #define EQ_TUNING

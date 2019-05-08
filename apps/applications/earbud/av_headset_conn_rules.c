@@ -1426,6 +1426,13 @@ static ruleAction ruleConnectPeer(ruleConnectReason reason)
 {
     bdaddr handset_addr;
 
+#ifdef INCLUDE_FTSINGLEPEER
+		if(appUiFTSingleGet())
+		{
+	        return RULE_ACTION_IGNORE;
+		}
+#endif
+
     /* Don't run rule if we're connected to peer */
     if (appDeviceIsPeerA2dpConnected() && appDeviceIsPeerScoFwdConnected())
     {

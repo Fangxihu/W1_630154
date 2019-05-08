@@ -288,10 +288,10 @@ bool appAvVolumeRepeat(int16 step)
 {
     DEBUG_LOG("appAvVolumeRepeat~");
     /* Handle volume change locally */
+	appUiAvVolumeUp();
     if (appAvVolumeChange(step))
     {
         MAKE_AV_MESSAGE(AV_INTERNAL_VOLUME_REPEAT);
-		/*appUiAvVolumeUp();*/
 
         /* Send repeat message later */
         message->step = step;
@@ -329,10 +329,11 @@ void appAvVolumeStart(int16 step)
         {
 			DEBUG_LOG("UI_handle~");
             appGetAv()->volume_repeat = 0;
+			/*
             if (step > 0)
                 appUiAvVolumeUp();
             else
-                appUiAvVolumeDown();
+                appUiAvVolumeDown();*/
         }
     }
     else
