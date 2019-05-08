@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Copyright (c) 2018 Qualcomm Technologies International, Ltd.-->
+
+<pio_message_map xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="pio_message_map.xsd">
+
+    <!--Debounce can be set for PIO, if not specified default debounce values will be used (1-count, 0-period).-->
+    <pio_debounce>
+    <nreads>4</nreads>
+    <period>5</period>
+    </pio_debounce>
+
+    <pio>
+        <pinFriendlyName>MFB_BUTTON</pinFriendlyName>
+        <pad>0</pad>
+    </pio>
+
+    <message>
+        <messageName>APP_MFB_BUTTON_PRESS</messageName>
+        <buttonEvent>RELEASE</buttonEvent>
+        <activePinFriendlyName>MFB_BUTTON</activePinFriendlyName>
+    </message>
+
+    <message>
+        <messageName>APP_MFB_BUTTON_HELD_1</messageName>
+        <buttonEvent>HELD</buttonEvent>
+        <activePinFriendlyName>MFB_BUTTON</activePinFriendlyName>
+        <timeout_ms>1000</timeout_ms>
+    </message>
+
+    <message>
+        <messageName>APP_MFB_BUTTON_1_SECOND</messageName>
+        <buttonEvent>HELD_RELEASE</buttonEvent>
+        <activePinFriendlyName>MFB_BUTTON</activePinFriendlyName>
+        <timeout_ms>1000</timeout_ms>
+    </message>
+
+    <message>
+        <messageName>APP_MFB_BUTTON_HELD_2</messageName>
+        <buttonEvent>HELD</buttonEvent>
+        <activePinFriendlyName>MFB_BUTTON</activePinFriendlyName>
+        <timeout_ms>2000</timeout_ms>
+    </message>
+
+    <message>
+        <messageName>APP_MFB_BUTTON_2_SECOND</messageName>
+        <buttonEvent>HELD_RELEASE</buttonEvent>
+        <activePinFriendlyName>MFB_BUTTON</activePinFriendlyName>
+        <timeout_ms>2000</timeout_ms>
+    </message>
+<!--
+    <message>
+        <messageName>APP_MFB_BUTTON_HELD_3</messageName>
+        <buttonEvent>HELD</buttonEvent>
+        <activePinFriendlyName>MFB_BUTTON</activePinFriendlyName>
+        <timeout_ms>3000</timeout_ms>
+    </message>
+
+    <message>
+        <messageName>APP_MFB_BUTTON_3_SECOND</messageName>
+        <buttonEvent>HELD_RELEASE</buttonEvent>
+        <activePinFriendlyName>MFB_BUTTON</activePinFriendlyName>
+        <timeout_ms>3000</timeout_ms>
+    </message>
+
+    <message>
+        <messageName>APP_MFB_BUTTON_HELD_7</messageName>
+        <buttonEvent>HELD</buttonEvent>
+        <activePinFriendlyName>MFB_BUTTON</activePinFriendlyName>
+        <timeout_ms>7000</timeout_ms>
+    </message>
+
+    <message>
+        <messageName>APP_MFB_BUTTON_7_SECOND</messageName>
+        <buttonEvent>HELD_RELEASE</buttonEvent>
+        <activePinFriendlyName>MFB_BUTTON</activePinFriendlyName>
+        <timeout_ms>7000</timeout_ms>
+    </message>
+-->
+</pio_message_map>

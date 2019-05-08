@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+    <group name="kitres://{bbac163c-41be-4ce7-b236-236f15ff18ca}/debug/default">
+        <item name="Default">
+            <item name="deploy">device://tc/usb2tc/114/qcc3020</item>
+            <item name="run">device://tc/usb2tc/114/qcc3020</item>
+        </item>
+        <item name="watches">
+            <item name="number">0</item>
+        </item>
+        <item name="breakpoints">
+            <item name="number">1</item>
+            <item name="0">
+                <item name="CoreName"></item>
+                <item name="Enabled">true</item>
+                <item name="Type">2</item>
+                <item name="Category">0</item>
+                <item name="Padding">0</item>
+                <item name="Filename">F:/Fang_WorkNotes/project/W1/SW/W1_V005_ADK630/apps/applications/earbud/av_headset_pairing.c</item>
+                <item name="LineNumber">1446</item>
+                <item name="FunctionName">appHandleClDmLocalNameComplete</item>
+            </item>
+        </item>
+    </group>
+</settings>
