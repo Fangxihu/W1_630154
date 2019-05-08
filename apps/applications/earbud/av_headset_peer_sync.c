@@ -332,11 +332,14 @@ static void appPeerSyncUpdatePeerInCase(bool peer_in_case)
     }
 #endif
 #ifdef	LIMIT_PEER
-		if(appSmIsInCase())
+		if((appChargerIsConnected() != CHARGER_DISCONNECTED) || appSmIsInCase())
 		{
-			ps->peer_connected_fail = FALSE;
-			MessageCancelAll(&ps->task, PEER_SYNC_INTERNAL_M1);
-			MessageSendLater(&ps->task, PEER_SYNC_INTERNAL_M1, NULL, 20);
+			//if(ps->peer_connected_fail)
+			{
+				ps->peer_connected_fail = FALSE;
+				//MessageCancelAll(&ps->task, PEER_SYNC_INTERNAL_M1);
+				MessageSendLater(&ps->task, PEER_SYNC_INTERNAL_M1, NULL, 20);
+			}
 		}
 #endif
     }
@@ -376,6 +379,7 @@ static void appPeerSyncUpdatePeerInEar(bool peer_in_ear)
 
 #ifdef	LIMIT_PEER
 /*接收的更新处理*/
+/*处理第一个7s过后，peer发过来同步消息，处理是否接着连接*/
 static void appPeerSyncUpdatePeerConnected(bool peer_connected)
 {
     peerSyncTaskData* ps = appGetPeerSync();
