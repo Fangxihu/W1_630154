@@ -56,6 +56,9 @@ typedef enum
 	CHARGER_STATE_COMPLETE,
 	CHARGER_STATE_FINISH,
 	CHARGER_QUICK_RELEASE,
+#ifdef	AUTO_ENTER_PAIR
+	CHARGER_DELAY_HANDLE,
+#endif
 };
 #endif
 
@@ -74,7 +77,14 @@ typedef struct
     charger_status status;
     /*! Reasons the charger is disabled (bitfield). */
     chargerDisableReason disable_reason;
+#ifdef	AUTO_ENTER_PAIR
+    bool charger_status_delay:1;                /*!< User initiated pairing */
+#endif
 } chargerTaskData;
+
+#ifdef	AUTO_ENTER_PAIR
+extern bool appChargerStatusDelayGet(void);
+#endif
 
 extern void appChargerInit(void);
 

@@ -1808,9 +1808,12 @@ static void appSmHandleHfpDisconnectedInd(APP_HFP_DISCONNECTED_IND_T *ind)
 #ifdef	AUTO_ENTER_PAIR
 		if(((ind->reason == APP_HFP_DISCONNECT_NORMAL) && (sm->linkloss_flag == FALSE)) && (PHY_STATE_IN_CASE != appPhyStateGetState()))
 		{
-			DEBUG_LOG("HFP NORMAL enter pairing!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-			MessageSendLater(appGetSmTask(), SM_INTERNAL_USER_HANDSET_ENTER_PAIR, NULL, D_SEC(2));
+			if(!appChargerStatusDelayGet())
+			{
+				DEBUG_LOG("HFP NORMAL enter pairing!!!!!!!!!!!!!!!!!!!!!!!!!");
+				MessageCancelAll(appGetSmTask(), SM_INTERNAL_USER_HANDSET_ENTER_PAIR);
+				MessageSendLater(appGetSmTask(), SM_INTERNAL_USER_HANDSET_ENTER_PAIR, NULL, D_SEC(1));
+			}
 		}
 #endif
 

@@ -1,2 +1,4 @@
 *.o
-*.o
+apps\applications\earbud\qcc512x_qcc302x\QCC3020-AA_DEV-BRD-R2-AA\depend_debug_qcc512x_qcc302x
+apps\applications\earbud\qcc512x_qcc302x\QCC3020-AA_DEV-BRD-R2-AA\image
+apps\applications\earbud\qcc512x_qcc302x\QCC3020-AA_DEV-BRD-R2-AA\dfu

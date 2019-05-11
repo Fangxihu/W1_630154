@@ -188,6 +188,30 @@ static void appChargerHandleQuickREL(void)
 
 #endif
 
+#ifdef	AUTO_ENTER_PAIR
+static void appChargerStatusDelaySend(void)
+{
+	chargerTaskData *theCharger = appGetCharger();
+    theCharger->charger_status_delay = TRUE;
+	MessageCancelAll(&theCharger->task, CHARGER_DELAY_HANDLE);
+	MessageSendLater(&theCharger->task, CHARGER_DELAY_HANDLE, NULL, 1500);
+}
+
+static void appChargerStatusDelayHandle(void)
+{
+	chargerTaskData *theCharger = appGetCharger();
+    theCharger->charger_status_delay = FALSE;
+	MessageCancelAll(&theCharger->task, CHARGER_DELAY_HANDLE);
+}
+
+bool appChargerStatusDelayGet(void)
+{
+	chargerTaskData *theCharger = appGetCharger();
+	return theCharger->charger_status_delay;
+}
+
+#endif
+
 /**************************************************************************/
 static void appChargerCheck(void)
 {
@@ -249,6 +273,7 @@ static void appChargerCheck(void)
     /* Check if connected status has changed */
     if (is_connected != theCharger->is_connected)
     {
+		DEBUG_LOG("charger connected & disconnected change!!!");
 #ifdef CHG_FINISH_LED
     	appChargerCancelFinish();
 		appChargerCancelQuickREL();
@@ -256,6 +281,7 @@ static void appChargerCheck(void)
 
 #ifdef	AUTO_ENTER_PAIR
 		appSmUserHandsetCancelPairing();
+		appChargerStatusDelaySend();
 #endif
 
         /* Check if disconnected */
@@ -469,7 +495,11 @@ static void appChargerHandleMessage(Task task, MessageId id, Message message)
         case CHARGER_QUICK_RELEASE:
             appChargerHandleQuickREL();
             break;
-
+#ifdef	AUTO_ENTER_PAIR
+        case CHARGER_DELAY_HANDLE:
+            appChargerStatusDelayHandle();
+            break;
+#endif
         default:
             break;
     }
@@ -574,6 +604,9 @@ void appChargerInit(void)
     theCharger->is_charging = FALSE;
     theCharger->status = ENABLE_FAIL_UNKNOWN;
     theCharger->disable_reason = CHARGER_DISABLE_REASON_NONE;
+#ifdef	AUTO_ENTER_PAIR
+    theCharger->charger_status_delay = FALSE;
+#endif
 
     /* Register for charger messages */
     MessageChargerTask(&theCharger->task);
