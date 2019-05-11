@@ -17,11 +17,16 @@
 #define DISABLE_AACx
 #endif
 #define DISABLE_AAC
-#define SW_DEBUG
+#define SW_DEBUGx
+
 
 #ifdef SW_DEBUG
 #define EQ_TUNING
 #endif
+
+#define IDLE_POWER_OFFx
+
+/*============================================*/
 
 /*! Allow 2nd Earbud to connect to TWS+ Handset after pairing */
 #define ALLOW_CONNECT_AFTER_PAIRING (TRUE)
@@ -435,7 +440,7 @@ page_timeout * 625UL / 1000UL
 #endif
 
 /*! Default DAC disconnection delay (in milliseconds) */
-#define appConfigDacDisconnectionDelayMs()    (60000)
+#define appConfigDacDisconnectionDelayMs()    500/*(60000)*/
 
 /*! Microphone path delay variation. */
 #define appConfigMicPathDelayVariationUs()      (10000)

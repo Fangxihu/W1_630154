@@ -341,3 +341,9 @@ void appSmKeyConnectHandsetFlagSet(bool flag);
 bool appSmKeyConnectHandsetFlagGet(void);
 #endif
 
+#ifdef IDLE_POWER_OFF
+void appEnterStausIdle(void);
+void appExitStausIdle(void);
+#endif
+
+

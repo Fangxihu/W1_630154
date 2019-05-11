@@ -1011,7 +1011,7 @@ static void appUiMultiTapHandle(void)
 #endif
 		}
 		break;
-		case 6:
+		case 5:
 		{
 			DEBUG_LOG("key five!!!_dfu");
 #ifdef INCLUDE_DFU
@@ -1025,7 +1025,7 @@ static void appUiMultiTapHandle(void)
 		{
 			DEBUG_LOG("key 7!!!_ft");
 #ifdef INCLUDE_FTSINGLEPEER
-			if ((PHY_STATE_IN_CASE != appPhyStateGetState()) && (!(theUi->ftsingle_flag)))
+			if ((PHY_STATE_IN_CASE != appPhyStateGetState()) && (!(theUi->ftsingle_flag)) && (!appDeviceGetPeerBdAddr(NULL)))
 			{
 				DEBUG_LOG("DUT_modle!!!");
 				theUi->ftsingle_flag = TRUE;
@@ -1083,6 +1083,10 @@ static void appUiHandleMessage(Task task, MessageId id, Message message)
 {
     uiTaskData *theUi = (uiTaskData *)task;
     UNUSED(message);
+	
+#ifdef IDLE_POWER_OFF
+	appEnterStausIdle();
+#endif
 
     switch (id)
     {

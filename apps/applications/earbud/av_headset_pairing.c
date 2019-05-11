@@ -415,6 +415,13 @@ static void appPairingEnterHandsetDiscoverable(pairingTaskData *thePairing)
 
     /* Show pairing on LEDs */
     appUiPairingActive(thePairing->is_user_initiated);
+
+/*希望处理成同时进配对的情况下，取消一个，只允许左耳进配对*/
+#ifdef	LIMIT_PEER
+	if(appConfigIsLeft())	{
+		
+	}
+#endif
 }
 
 
@@ -621,8 +628,12 @@ static void appPairingHandsetComplete(pairingTaskData *thePairing, pairingStatus
     }
     else
     {
-        if (status != pairingHandsetCancelled)
+        if (status != pairingHandsetCancelled) {
             appUiPairingFailed();
+#ifdef IDLE_POWER_OFF
+			appEnterStausIdle();
+#endif
+    	}
     }
 
     /* Move back to 'idle' state */

@@ -233,6 +233,10 @@ static void appHfpEnterConnected(void)
 
     /* Play connected tone */
     appUiHfpConnected(appGetHfp()->flags & HFP_CONNECT_NO_UI);
+	
+#ifdef IDLE_POWER_OFF
+	appExitStausIdle();
+#endif
 
     /* Clear silent flags */
     appGetHfp()->flags &= ~(HFP_CONNECT_NO_UI | HFP_CONNECT_NO_ERROR_UI | HFP_DISCONNECT_NO_UI);

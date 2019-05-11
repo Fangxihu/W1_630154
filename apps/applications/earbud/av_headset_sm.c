@@ -381,6 +381,9 @@ static void appEnterOutOfCaseIdle(void)
 
     if (appConfigIdleTimeoutMs())/*5 min*/
     {
+#ifdef IDLE_POWER_OFF
+		MessageCancelAll(appGetSmTask(), SM_INTERNAL_TIMEOUT_IDLE);
+#endif
         MessageSendLater(appGetSmTask(), SM_INTERNAL_TIMEOUT_IDLE, NULL, appConfigIdleTimeoutMs());
     }
 }
@@ -393,8 +396,12 @@ static void appExitOutOfCaseIdle(void)
 
     /* Stop idle on LEDs */
     appUiIdleInactive();
-
+	
+#ifdef IDLE_POWER_OFF
+	MessageCancelAll(appGetSmTask(), SM_INTERNAL_TIMEOUT_IDLE);
+#else
     MessageCancelFirst(appGetSmTask(), SM_INTERNAL_TIMEOUT_IDLE);
+#endif
 }
 
 /*! \brief Enter
@@ -458,6 +465,11 @@ static void appExitSubStateTerminating(void)
 static void appEnterInEarIdle(void)
 {
     DEBUG_LOG("appEnterInEarIdle");
+#ifdef IDLE_POWER_OFF
+	if(appHfpIsDisconnected() && appAvIsDisconnected()) {
+		appEnterOutOfCaseIdle();
+	}
+#endif
 }
 
 /*! \brief Exit
@@ -465,6 +477,9 @@ static void appEnterInEarIdle(void)
 static void appExitInEarIdle(void)
 {
     DEBUG_LOG("appExitInEarIdle");
+#ifdef IDLE_POWER_OFF
+	appExitOutOfCaseIdle();
+#endif
 }
 
 /*! \brief Enter
@@ -1510,8 +1525,23 @@ static void appSmHandleConnRulesScoForwardingControl(CONN_RULES_SCO_FORWARDING_C
 static void appSmHandleInternalTimeoutIdle(void)
 {
     DEBUG_LOG("appSmHandleInternalTimeoutIdle");
+#ifndef IDLE_POWER_OFF
     PanicFalse(APP_STATE_OUT_OF_CASE_IDLE == appGetState());
     appSetState(APP_STATE_OUT_OF_CASE_SOPORIFIC);
+#else
+    PanicFalse((APP_STATE_OUT_OF_CASE_IDLE == appGetState()) || (APP_STATE_IN_EAR_IDLE == appGetState()));
+
+    if (appConfigIdleTimeoutMs() && appHfpIsDisconnected() && appAvIsDisconnected() &&\
+		(!appPeerSyncIsPeerHandsetHfpConnected()) && (!appPeerSyncIsPeerHandsetAvrcpConnected()) &&\
+		(!appPeerSyncIsPeerHandsetA2dpConnected()))
+    {
+		appPowerDoPowerOff();
+    }
+	else {
+		MessageCancelAll(appGetSmTask(), SM_INTERNAL_TIMEOUT_IDLE);
+        MessageSendLater(appGetSmTask(), SM_INTERNAL_TIMEOUT_IDLE, NULL, appConfigIdleTimeoutMs());
+	}
+#endif
 }
 
 /*! \brief Handle rule action to update page scan settings. */
@@ -1598,6 +1628,10 @@ static void appSmHandleAvA2dpDisconnectedInd(const AV_A2DP_DISCONNECTED_IND_T *i
                    links, record that we're not connected with A2DP to handset */
                 if (ind->reason == AV_A2DP_DISCONNECT_NORMAL && !appSmIsDisconnectingLinks())
                     appDeviceSetA2dpWasConnected(&ind->bd_addr, FALSE);
+				
+#ifdef IDLE_POWER_OFF
+				appEnterStausIdle();
+#endif
             }
         }
         break;
@@ -1720,6 +1754,10 @@ static void appSmHandleHfpConnectedInd(APP_HFP_CONNECTED_IND_T *ind)
 
         /* Record that we're connected with HFP to handset */
         appDeviceSetHfpWasConnected(&ind->bd_addr, TRUE);
+		
+#ifdef IDLE_POWER_OFF
+		appExitStausIdle();
+#endif
     }
 }
 
@@ -1790,6 +1828,10 @@ static void appSmHandleHfpDisconnectedInd(APP_HFP_DISCONNECTED_IND_T *ind)
             {
                 appConnRulesResetEvent(RULE_EVENT_HANDSET_HFP_CONNECTED);
                 appConnRulesSetEvent(appGetSmTask(), RULE_EVENT_HANDSET_HFP_DISCONNECTED);
+				
+#ifdef IDLE_POWER_OFF
+				appEnterStausIdle();
+#endif
 
                 /* If it was a normal disconnect and we're intentionally disconnecting
                    links, record that we're not connected with HFP to handset */
@@ -2494,5 +2536,36 @@ bool appSmKeyConnectHandsetFlagGet(void)
     smTaskData* sm = appGetSm();
 	return sm->key_connect_handset;
 }
+#endif
+
+#ifdef IDLE_POWER_OFF
+/*! \brief Exit
+ */
+void appExitStausIdle(void)
+{
+	MessageCancelAll(appGetSmTask(), SM_INTERNAL_TIMEOUT_IDLE);
+}
+
+/*! \brief Enter
+ */
+void appEnterStausIdle(void)
+{
+	DEBUG_LOGF("IdleTimeout= %d,Hfp state= %d,Av state= %d", appConfigIdleTimeoutMs(),appHfpIsDisconnected(),\
+		appAvIsDisconnected);
+
+    if (appConfigIdleTimeoutMs() && appHfpIsDisconnected() && appAvIsDisconnected() &&\
+		(!appPeerSyncIsPeerHandsetHfpConnected()) && (!appPeerSyncIsPeerHandsetAvrcpConnected()) &&\
+		(!appPeerSyncIsPeerHandsetA2dpConnected()))
+    {
+		DEBUG_LOG("appEnterStausIdle!!!");
+		MessageCancelAll(appGetSmTask(), SM_INTERNAL_TIMEOUT_IDLE);
+        MessageSendLater(appGetSmTask(), SM_INTERNAL_TIMEOUT_IDLE, NULL, appConfigIdleTimeoutMs());
+    }
+	else {
+		MessageCancelAll(appGetSmTask(), SM_INTERNAL_TIMEOUT_IDLE);
+	}
+	
+}
+
 #endif
 

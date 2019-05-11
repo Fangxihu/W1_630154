@@ -401,7 +401,11 @@ static void appA2dpEnterConnectedSignalling(avInstanceTaskData *theInst)
     {
         appUiAvPeerConnected(theInst->a2dp.flags & A2DP_CONNECT_SILENT);
     }
-	
+
+#ifdef IDLE_POWER_OFF
+	appExitStausIdle();
+#endif
+
     /* Clear silent flags */
     theInst->a2dp.flags &= ~(A2DP_CONNECT_SILENT | A2DP_CONNECT_SILENT_ERROR | A2DP_DISCONNECT_SILENT);
 
@@ -838,6 +842,10 @@ static void appA2dpEnterDisconnected(avInstanceTaskData *theInst)
     /* Send ourselves a destroy message so that any other messages waiting on the
        operation lock can be handled */
     MessageSendConditionally(&theInst->av_task, AV_INTERNAL_A2DP_DESTROY_REQ, NULL, &appA2dpGetLock(theInst));
+	
+#ifdef IDLE_POWER_OFF
+	appEnterStausIdle();
+#endif
 }
 
 /*! \brief Exiting A2DP_STATE_DISCONNECTED

@@ -108,23 +108,6 @@ bool appDeviceGetPeerBdAddr(bdaddr *bd_addr)
     appDeviceAttributes attributes;
     deviceTaskData *theDevice = appGetDevice();
 	
-#ifdef INCLUDE_FTSINGLEPEERxx
-	if(appUiFTSingleGet())
-	{
-		bd_addr->nap = 0xc5a6;
-		bd_addr->uap =0x66;
-		if(appConfigIsRight())
-		{
-			bd_addr->lap = 0x754c01;
-		}
-		else
-		{
-			bd_addr->lap = 0x754c02;
-		}
-		return TRUE;
-	}
-#endif
-
     /* return address in RAM if exists, otherwise check PS */
     if (!BdaddrIsZero(&theDevice->peer_bd_addr))
     {
