@@ -2,5 +2,5 @@ file=bt2
 
 # Change bluetooth address and device name to appropriate values
 # using variable markers from the template.xml file.
-pskey_bdaddr={0x35f135,0x5b,0x5432}
+pskey_bdaddr={0x35f139,0x5b,0x5432}
 pskey_device_name="W1"

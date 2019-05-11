@@ -1009,15 +1009,6 @@ static void appUiMultiTapHandle(void)
 			else if (appSmIsInCase())
 				appTestPhyStateOutOfCaseEvent();
 #endif
-#ifdef INCLUDE_DUT111
-	            if ((PHY_STATE_IN_CASE != appPhyStateGetState()) && (!(theUi->dut_flag)))
-	            {
-				DEBUG_LOG("DUT_modle!!!");
-				appUiDut();
-				Dut_User_Exit_Peer_Pairing();
-				MessageSendLater(&theUi->task, UI_INTERNAL_DUT, NULL, 1000);
-	            }
-#endif
 		}
 		break;
 		case 6:

@@ -251,14 +251,28 @@ static void appChargerCheck(void)
     {
 #ifdef CHG_FINISH_LED
     	appChargerCancelFinish();
-	appChargerCancelQuickREL();
+		appChargerCancelQuickREL();
 #endif
+
+#ifdef	AUTO_ENTER_PAIR
+		appSmUserHandsetCancelPairing();
+#endif
+
         /* Check if disconnected */
         if (is_connected == CHARGER_DISCONNECTED)
         {
 #ifdef BATTERY_LOW
 		appBatteryLowCheck();
 #endif
+
+#ifdef INCLUDE_FTSINGLEPEER
+			if(appUiFTSingleGet())
+			{
+				appUiFTSingleClear();
+				appSmDeletePairingAndReset();
+			}
+#endif
+
             /* Indicate charger disconnection */
             appUiChargerDisconnected();
 
@@ -281,7 +295,13 @@ static void appChargerCheck(void)
         	{
                 appTaskListMessageSendId(theCharger->client_tasks, CHARGER_MESSAGE_ATTACHED);
         	}
-			
+#ifdef INCLUDE_FTSINGLEPEER
+			if(appUiFTSingleGet())
+			{
+				UserDisconnectAllLinks();
+			}
+#endif
+
 #ifdef CHG_FINISH_LED
         	appChargerSendQuickREL();
 #endif
@@ -324,9 +344,9 @@ static void appChargerCheck(void)
     	{
             appUiChargerComplete();
 #ifdef CHG_FINISH_LED
-		appChargerSendFinish();	
+			appChargerSendFinish();	
 #endif
-	}
+		}
         else if (is_charging)
         {
             if (appBatteryGetVoltage() > appConfigBatteryVoltageOk())

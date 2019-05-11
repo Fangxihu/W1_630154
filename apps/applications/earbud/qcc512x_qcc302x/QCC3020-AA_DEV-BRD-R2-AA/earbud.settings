@@ -2,8 +2,8 @@
 <settings>
     <group name="kitres://{bbac163c-41be-4ce7-b236-236f15ff18ca}/debug/default">
         <item name="Default">
-            <item name="deploy">device://tc/usb2tc/114/qcc3020</item>
-            <item name="run">device://tc/usb2tc/114/qcc3020</item>
+            <item name="deploy">device://trb/usb2trb/180039/qcc3026</item>
+            <item name="run">device://trb/usb2trb/180039/qcc3026</item>
         </item>
         <item name="watches">
             <item name="number">0</item>
@@ -11,7 +11,7 @@
         <item name="breakpoints">
             <item name="number">1</item>
             <item name="0">
-                <item name="CoreName"></item>
+                <item name="CoreName"/>
                 <item name="Enabled">true</item>
                 <item name="Type">2</item>
                 <item name="Category">0</item>

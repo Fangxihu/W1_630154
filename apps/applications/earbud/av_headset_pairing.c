@@ -633,7 +633,7 @@ static void appPairingHandsetComplete(pairingTaskData *thePairing, pairingStatus
 static void appPairingHandsetUpdate(bdaddr* handset_addr, uint16 tws_version, uint8 flags)
 {
     appDeviceAttributes attributes;
-
+	
     /* TODO may need to update this function to look for existing attributes
      * in case device already exists, if we have attributes (flags?) that we
      * don't want to forget. Currently this function will clear everything. */
@@ -645,6 +645,7 @@ static void appPairingHandsetUpdate(bdaddr* handset_addr, uint16 tws_version, ui
     attributes.tws_version = tws_version;
     attributes.flags |= flags | DEVICE_FLAGS_JUST_PAIRED;
     appDeviceSetAttributes(handset_addr, &attributes);
+    DEBUG_LOG("appPairingHandsetUpdate!");
 }
 
 
@@ -1099,12 +1100,19 @@ void appPairingHandleClSmAuthenticateConfirm(const CL_SM_AUTHENTICATE_CFM_T *cfm
             {
                 /* Add attributes, set pre paired flag if this address is known */
                 if (BdaddrIsSame(&cfm->bd_addr, &thePairing->bd_addr[0]))
-                    appPairingHandsetUpdate(&cfm->bd_addr, DEVICE_TWS_UNKNOWN, DEVICE_FLAGS_PRE_PAIRED_HANDSET);
+                	{
+						DEBUG_LOG("BdaddrIsSame!");
+	                    appPairingHandsetUpdate(&cfm->bd_addr, DEVICE_TWS_UNKNOWN, DEVICE_FLAGS_PRE_PAIRED_HANDSET);
+                	}
                 else
-                    appPairingHandsetUpdate(&cfm->bd_addr, DEVICE_TWS_UNKNOWN, 0);
+                	{
+						DEBUG_LOG("BdaddrIsNotSame!");
+	                    appPairingHandsetUpdate(&cfm->bd_addr, DEVICE_TWS_UNKNOWN, 0);
+                	}
 
                 if (cfm->bonded)
                 {
+					DEBUG_LOG("update bonded!");
                     /* Update the device link mode based on the key type */
                     appPairingUpdateLinkMode(&cfm->bd_addr, cfm->key_type);
 

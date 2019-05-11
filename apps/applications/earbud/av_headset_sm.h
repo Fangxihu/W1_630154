@@ -289,6 +289,8 @@ void appSmHfpConnectFlagSet(bool flag);
 
 extern bool appSmHfpConnectFlagGet(void);
 
+extern void appSmUserHandsetCancelPairing(void);
+
 extern void appSmUserHandsetEnterPairing(void);
 extern bool appSmLinklossInd(void);
 
@@ -312,6 +314,8 @@ extern void appSmEndDfuMode(void);
 extern void appSmUpgradeStartedByGaia(void);
 /*! \brief Notify the state machine of DFU activity */
 extern void appSmNotifyDfuActivity(void);
+
+extern void appSmDeletePairingAndReset(void);
 
 #else
 /*! \brief Not implemented.

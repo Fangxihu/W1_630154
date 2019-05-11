@@ -37,7 +37,7 @@ static void appSmCancelDfuTimers(void)
 }
 
 /*! \brief Delete all peer and handset pairing and reboot device. */
-static void appSmDeletePairingAndReset(void)
+void appSmDeletePairingAndReset(void)
 {
     bdaddr bd_addr;
 
@@ -538,14 +538,6 @@ static void appEnterInCase(void)
 #if 0
 		appScoFwdPeerConnectedClear();
 #endif
-#endif
-
-#ifdef INCLUDE_FTSINGLEPEER
-	if(appUiFTSingleGet())
-	{
-		appUiFTSingleClear();
-		appSmDeletePairingAndReset();
-	}
 #endif
 }
 
@@ -1748,6 +1740,13 @@ bool appSmLinklossInd(void)
 {
     smTaskData* sm = appGetSm();
 	return sm->linkloss_flag;
+}
+
+void appSmUserHandsetCancelPairing(void)
+{
+    smTaskData *sm = appGetSm();
+    MessageCancelAll(&sm->task, SM_INTERNAL_PAIR_HANDSET);
+	MessageCancelAll(&sm->task, SM_INTERNAL_USER_HANDSET_ENTER_PAIR);
 }
 
 void appSmUserHandsetEnterPairing(void)

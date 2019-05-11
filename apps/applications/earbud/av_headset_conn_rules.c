@@ -1426,7 +1426,7 @@ static ruleAction ruleConnectPeer(ruleConnectReason reason)
 {
     bdaddr handset_addr;
 
-#ifdef INCLUDE_FTSINGLEPEER
+#ifdef INCLUDE_FTSINGLEPEERxx
 		if(appUiFTSingleGet())
 		{
 	        return RULE_ACTION_IGNORE;

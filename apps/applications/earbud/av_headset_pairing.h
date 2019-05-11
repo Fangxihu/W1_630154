@@ -77,21 +77,21 @@
 /*! \brief Pairing module state machine states */
 typedef enum pairing_states
 {
-    PAIRING_STATE_NULL,                /*!< Startup state */
+    PAIRING_STATE_NULL,                /*!<0 Startup state */
     PAIRING_STATE_INITIALISING,        /*!< Initialising state */
     PAIRING_STATE_IDLE,                /*!< No pairing happening */
 
-    PAIRING_STATE_PEER_INQUIRY,        /*!< Inquiring for peer earbud */
+    PAIRING_STATE_PEER_INQUIRY,        /*!< 3Inquiring for peer earbud */
     PAIRING_STATE_PEER_SDP_SEARCH,     /*!< SDP search for Earbud TWS+ service record */
     PAIRING_STATE_PEER_AUTHENTICATE,   /*!< Authentication with peer earbud */
 
-    PAIRING_STATE_PEER_DISCOVERABLE,   /*!< Discoverable to the peer */
+    PAIRING_STATE_PEER_DISCOVERABLE,   /*!<6 Discoverable to the peer */
     PAIRING_STATE_PEER_PENDING_AUTHENTICATION, /*!< Waiting to authenticate with peer */
     PAIRING_STATE_PEER_SDP_SEARCH_AUTHENTICATED, /*!< Performing SDP search when authenticated */
 
     PAIRING_STATE_PEER_SCO_FWD_SDP_SEARCH,
 
-    PAIRING_STATE_HANDSET_DISCOVERABLE, /*!< Discoverable to the handset */
+    PAIRING_STATE_HANDSET_DISCOVERABLE, /*!<10 Discoverable to the handset */
     PAIRING_STATE_HANDSET_PENDING_AUTHENTICATION, /*!< Waiting to authenticate with handset */
     PAIRING_STATE_HANDSET_SDP_SEARCH_AUTHENTICATED, /*!< Waiting for TWS version of handset */
     PAIRING_STATE_CHECKING_HANDSET_LINKKEYS, /*!< Checking if the handset-link keys need to be forwarded to the peer */

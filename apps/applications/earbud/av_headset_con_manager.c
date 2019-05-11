@@ -348,7 +348,7 @@ void appConManagerHandleClDmAclOpenedIndication(const CL_DM_ACL_OPENED_IND_T *in
         /* Set default link supervision timeout if locally inititated (i.e. we're master) */
         if (is_local)
             appLinkPolicyUpdateLinkSupervisionTimeout(&ind->bd_addr.addr);
-
+		
         /* Check if this BDADDR is for handset */
         if (appDeviceIsHandset(&ind->bd_addr.addr))
         {
