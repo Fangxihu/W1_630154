@@ -664,6 +664,14 @@ static void appPeerSyncHandlePeerSigMsgChannelTxInd(const PEER_SIG_MSG_CHANNEL_R
     }
 #endif
 
+#ifdef	LIMIT_PEER
+	if(ps->peer_is_pairing)	{
+		if(appConfigIsRight())	{
+			appPairingHandsetPairCancel();
+		}
+	}
+#endif
+
     if (!(was_supported & DEVICE_PROFILE_A2DP) & ps->peer_a2dp_connected)
     {
         appConnRulesSetEvent(appGetSmTask(), RULE_EVENT_PEER_A2DP_SUPPORTED);

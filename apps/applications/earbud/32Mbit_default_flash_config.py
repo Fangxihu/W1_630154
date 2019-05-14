@@ -9,13 +9,13 @@
 },
 "encrypt": False,
 "layout": [
-    ("curator_fs",      { "capacity" :  1 * 64 * 1024,  "authenticate": False, "src_file_signed": False}),
-    ("apps_p0",         { "capacity" : 9 * 64 * 1024,  "authenticate": True, "src_file_signed": True}),
-    ("apps_p1",         { "capacity" :  8 * 64 * 1024,  "authenticate": False}),
-    ("device_ro_fs",    { "capacity" :  1 * 64 * 1024,  "authenticate": False, "inline_auth_hash": True }),
-    ("rw_config",       { "capacity" :  2 * 64 * 1024}),
-    ("rw_fs",           { "capacity" :  1 * 64 * 1024}),
-    ("ro_cfg_fs",       { "capacity" :  2 * 64 * 1024,  "authenticate": False}),
-    ("ro_fs",           { "capacity" :  6 * 64 * 1024,  "authenticate": False})
+    ("curator_fs",      { "capacity" : 1024,  "authenticate": False, "src_file_signed": False}),
+    ("apps_p0",         { "capacity" : 1024 * 576,  "authenticate": True, "src_file_signed": True}),
+    ("apps_p1",         { "capacity" : 1024 * 448,  "authenticate": False}),
+    ("device_ro_fs",    { "capacity" : 4096,  "authenticate": False, "inline_auth_hash": True }),
+    ("rw_config",       { "capacity" : 128 * 1024}),
+    ("rw_fs",           { "capacity" : 128 * 1024}),
+    ("ro_cfg_fs",       { "capacity" : 64 * 1024,  "authenticate": False}),
+    ("ro_fs",           { "capacity" : 7 * 64 * 1024,"authenticate": False})
 ]
 }

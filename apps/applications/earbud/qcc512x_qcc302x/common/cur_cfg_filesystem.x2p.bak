@@ -13,12 +13,12 @@
             <property name="TYPE">curator_config</property>
             <property name="system_label">QCC512X_CONFIG</property>
         </configuration>
-        <configuration name="filesystem" kit="kitres://{049607bf-c81c-44a1-92bb-afc0744dcab9}" options="build|deploy|default">
+        <configuration name="filesystem" kit="kitres://{72f9104a-225e-4fe9-a320-666c9faf24a6}" options="build|deploy|default">
             <devkitConfiguration>filesystem</devkitConfiguration>
-            <devkitPath>C:/qtil/ADK_QCC512X_QCC302X_WIN_6.3.2.24</devkitPath>
+            <devkitPath>C:/qtil/ADK_QCC512X_QCC302X_WIN_6.3.2.36</devkitPath>
             <devkitGroup>kitres://{bbac163c-41be-4ce7-b236-236f15ff18ca}</devkitGroup>
             <deployProject>deploy</deployProject>
-            <devkitRevision>1553887472</devkitRevision>
+            <devkitRevision>1557218675</devkitRevision>
             <property name="TYPE">curator_config</property>
             <property name="system_label">QCC512X_CONFIG</property>
         </configuration>
