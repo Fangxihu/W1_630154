@@ -11,7 +11,7 @@
         <item name="breakpoints">
             <item name="number">1</item>
             <item name="0">
-                <item name="CoreName"/>
+                <item name="CoreName"></item>
                 <item name="Enabled">true</item>
                 <item name="Type">2</item>
                 <item name="Category">0</item>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by Qualcomm MDE 4.2.2, 2019-05-14T09:09:43. -->
+<!-- Written by Qualcomm MDE 4.2.2, 2019-05-15T09:13:58. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
-  <value type="QByteArray">{10225f1d-7ea2-4a07-a02b-813960373d38}</value>
+  <value type="QByteArray">{34fc2b16-7f32-4612-93d6-b15d23ca73b4}</value>
  </data>
  <data>
   <variable>ProjectExplorer.Project.EditorSettings</variable>

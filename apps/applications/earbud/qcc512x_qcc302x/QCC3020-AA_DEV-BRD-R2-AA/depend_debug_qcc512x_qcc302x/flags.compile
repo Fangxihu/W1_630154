@@ -66,7 +66,7 @@ hydra_dev.h
 -I../../../../installed_libs\include\profiles\default_qcc512x_qcc302x
 -I../../../../installed_libs\include\standard
 -I../../chains
--IC:\qtil\ADK_QCC512x_QCC302x_WIN_6.3.0.154\audio/kalimba/kymera/common/interface/gen/k32
+-IE:\qtil\ADK_QCC512x_QCC302x_WIN_6.3.0.154\audio/kalimba/kymera/common/interface/gen/k32
 -DDEBUG_BUILD
 -O0
 -Werror
